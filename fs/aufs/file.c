@@ -76,6 +76,7 @@ struct file *au_h_open(struct dentry *dentry, aufs_bindex_t bindex, int flags,
 			     current_cred());
 	if (IS_ERR(h_file))
 		goto out_br;
+	AuDebugOn(!h_file->f_op);
 
 	if (file && (file->f_mode & FMODE_EXEC)) {
 		h_file->f_mode |= FMODE_EXEC;
