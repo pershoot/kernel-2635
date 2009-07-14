@@ -689,7 +689,6 @@ static int aufs_getattr(struct vfsmount *mnt __maybe_unused,
 		goto getattr;
 	}
 
-	did_lock = 1;
 	mnt_flags = au_mntflags(sb);
 	udba_none = !!au_opt_test(mnt_flags, UDBA_NONE);
 
@@ -705,6 +704,7 @@ static int aufs_getattr(struct vfsmount *mnt __maybe_unused,
 		}
 	} else
 		di_read_lock_child(dentry, AuLock_IR);
+	did_lock = 1;
 
 	bindex = au_ibstart(inode);
 	h_mnt = au_sbr_mnt(sb, bindex);
