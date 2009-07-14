@@ -334,7 +334,7 @@ static void xino_try_trunc(struct super_block *sb, struct au_branch *br)
 		goto out_args;
 	}
 
-	atomic_inc(&br->br_count);
+	atomic_inc_return(&br->br_count);
 	args->sb = sb;
 	args->br = br;
 	wkq_err = au_wkq_nowait(xino_do_trunc, args, sb);
@@ -342,12 +342,12 @@ static void xino_try_trunc(struct super_block *sb, struct au_branch *br)
 		return; /* success */
 
 	AuErr("wkq %d\n", wkq_err);
-	atomic_dec(&br->br_count);
+	atomic_dec_return(&br->br_count);
 
  out_args:
 	kfree(args);
  out:
-	atomic_dec(&br->br_xino_running);
+	atomic_dec_return(&br->br_xino_running);
 }
 
 /* ---------------------------------------------------------------------- */
