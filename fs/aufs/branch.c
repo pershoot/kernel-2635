@@ -894,6 +894,7 @@ int au_br_mod(struct super_block *sb, struct au_opt_mod *mod, int remount,
 {
 	int err, rerr;
 	aufs_bindex_t bindex;
+	struct path path;
 	struct dentry *root;
 	struct au_branch *br;
 
@@ -936,10 +937,12 @@ int au_br_mod(struct super_block *sb, struct au_opt_mod *mod, int remount,
 				rerr = -ENOMEM;
 				br->br_wbr = kmalloc(sizeof(*br->br_wbr),
 						     GFP_NOFS);
-				if (br->br_wbr)
-					rerr = au_br_init_wh
-						(sb, br, br->br_perm,
-						 mod->h_root);
+				if (br->br_wbr) {
+					path.mnt = br->br_mnt;
+					path.dentry = mod->h_root;
+					rerr = au_wbr_init(br, sb, br->br_perm,
+							   &path);
+				}
 				if (unlikely(rerr)) {
 					AuIOErr("nested error %d (%d)\n",
 						rerr, err);
@@ -952,11 +955,8 @@ int au_br_mod(struct super_block *sb, struct au_opt_mod *mod, int remount,
 		err = -ENOMEM;
 		br->br_wbr = kmalloc(sizeof(*br->br_wbr), GFP_NOFS);
 		if (br->br_wbr) {
-			struct path path = {
-				.mnt	= br->br_mnt,
-				.dentry	= mod->h_root
-			};
-
+			path.mnt = br->br_mnt;
+			path.dentry = mod->h_root;
 			err = au_wbr_init(br, sb, mod->perm, &path);
 			if (unlikely(err)) {
 				kfree(br->br_wbr);
