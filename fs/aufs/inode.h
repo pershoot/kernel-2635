@@ -37,7 +37,7 @@ struct au_hinotify {
 	struct inotify_watch	hin_watch;
 	struct inode		*hin_aufs_inode;	/* no get/put */
 #endif
-};
+} ____cacheline_aligned_in_smp;
 
 struct au_hinode {
 	struct inode		*hi_inode;
@@ -65,7 +65,7 @@ struct au_iinfo {
 struct au_icntnr {
 	struct au_iinfo iinfo;
 	struct inode vfs_inode;
-};
+} ____cacheline_aligned_in_smp;
 
 /* au_pin flags */
 #define AuPin_DI_LOCKED		1

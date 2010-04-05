@@ -49,7 +49,7 @@ struct au_vdir_destr {
 struct au_vdir_dehstr {
 	struct hlist_node	hash;
 	struct au_vdir_destr	*str;
-};
+} ____cacheline_aligned_in_smp;
 
 struct au_vdir_de {
 	ino_t			de_ino;
@@ -80,7 +80,7 @@ struct au_vdir {
 
 	unsigned long	vd_version;
 	unsigned long	vd_jiffy;
-};
+} ____cacheline_aligned_in_smp;
 
 /* ---------------------------------------------------------------------- */
 

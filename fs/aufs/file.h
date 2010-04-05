@@ -57,7 +57,7 @@ struct au_finfo {
 			int			fi_maintain_plink;
 		};
 	};
-};
+} ____cacheline_aligned_in_smp;
 
 /* ---------------------------------------------------------------------- */
 
