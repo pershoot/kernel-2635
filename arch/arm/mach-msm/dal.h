@@ -23,6 +23,7 @@ struct dal_info {
 	uint32_t size;
 	uint32_t version;
 	char name[32];
+}
 
 typedef void (*dal_event_func_t)(void *data, int len, void *cookie);
 
