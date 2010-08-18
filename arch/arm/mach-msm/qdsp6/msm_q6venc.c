@@ -68,7 +68,7 @@
 #include <linux/wakelock.h>
 #include <linux/android_pmem.h>
 #include <linux/msm_q6venc.h>
-#include "dal.h"
+#include "../dal.h"
 
 #define DALDEVICEID_VENC_DEVICE       0x0200002D
 /*#define DALDEVICEID_VENC_PORTNAME     "DAL_AQ_VID"*/
