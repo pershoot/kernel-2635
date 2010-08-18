@@ -1127,6 +1127,12 @@ config USB_S2255
 
 endif # V4L_USB_DRIVERS
 
+config 720P_CAMERA
+        bool "Qualcomm MSM camera with 720P video support"
+        depends on MSM_CAMERA
+        help
+          720P video support
+
 endif # VIDEO_CAPTURE_DRIVERS
 
 # MSM camera does not require V4L2
