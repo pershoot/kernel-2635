@@ -108,6 +108,7 @@
 
 #define MSM_CAM_IOCTL_AF_CTRL \
 	_IOR(MSM_CAM_IOCTL_MAGIC, 26, struct msm_ctrl_cmt_t *)
+
 #define MSM_CAM_IOCTL_AF_CTRL_DONE \
 	_IOW(MSM_CAM_IOCTL_MAGIC, 27, struct msm_ctrl_cmt_t *)
 
@@ -265,6 +266,8 @@ struct msm_camera_cfg_cmd {
 #define CMD_STATS_RS_ENABLE 39
 #define CMD_STATS_CS_ENABLE 40
 #define CMD_AXI_CFG_O1_AND_O2	41 /* output1 and output2 */
+
+#endif
 
 /* vfe config command: config command(from config thread)*/
 struct msm_vfe_cfg_cmd {
