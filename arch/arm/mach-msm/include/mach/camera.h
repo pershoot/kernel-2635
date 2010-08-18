@@ -299,7 +299,6 @@ struct axidata {
 	uint32_t bufnum3;
 #endif
 	struct msm_pmem_region *region;
-	uint32_t bufnum3;
 };
 
 #ifdef CONFIG_MSM_CAMERA_V4L2
