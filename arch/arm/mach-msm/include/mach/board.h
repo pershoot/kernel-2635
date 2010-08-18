@@ -65,14 +65,14 @@ struct camera_flash_cfg {
         uint8_t postpone_led_mode;
 };
 
-#ifdef CONFIG_MSM_CAMERA_OLD
-struct msm_camera_sensor_info {
-        int num_flash_levels;
-        int (*camera_flash)(int level);
-        uint16_t low_temp_limit;
-        uint16_t low_cap_limit;
-        uint8_t postpone_led_mode;
-};
+//#ifdef CONFIG_MSM_CAMERA_OLD
+//struct msm_camera_sensor_info {
+//        int num_flash_levels;
+//        int (*camera_flash)(int level);
+//        uint16_t low_temp_limit;
+//        uint16_t low_cap_limit;
+//        uint8_t postpone_led_mode;
+//};
 
 #ifdef CONFIG_MSM_CAMERA_OLD
 struct msm_camera_sensor_info {
