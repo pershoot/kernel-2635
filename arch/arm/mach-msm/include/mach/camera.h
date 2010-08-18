@@ -169,7 +169,6 @@ struct msm_sync {
         struct msm_camera_sensor_info *sdata;
         struct msm_camvfe_fn vfefn;
         struct msm_sensor_ctrl sctrl;
-	struct wake_lock wake_suspend_lock;
         struct wake_lock wake_lock;
         struct platform_device *pdev;
         uint8_t opencnt;
@@ -211,6 +210,7 @@ struct msm_sync {
 	struct msm_camera_sensor_info *sdata;
 	struct msm_camvfe_fn vfefn;
 	struct msm_sensor_ctrl sctrl;
+	struct wake_lock wake_suspend_lock;
 	struct wake_lock wake_lock;
 	struct platform_device *pdev;
 	uint8_t opencnt;

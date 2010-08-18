@@ -2093,6 +2093,7 @@ static int __msm_release(struct msm_sync *sync)
 		msm_queue_drain(&sync->frame_q, list_frame);
 		msm_queue_drain(&sync->pict_q, list_pict);
 
+		wake_unlock(&sync->wake_suspend_lock);
 		wake_unlock(&sync->wake_lock);
 
 		sync->apps_id = NULL;
@@ -2354,6 +2355,7 @@ static int __msm_open(struct msm_sync *sync, const char *const apps_id)
 	sync->apps_id = apps_id;
 
 	if (!sync->opencnt) {
+		wake_lock(&sync->wake_suspend_lock);
 		wake_lock(&sync->wake_lock);
 
 		msm_camvfe_fn_init(&sync->vfefn, sync);
@@ -2760,6 +2762,7 @@ static int msm_sync_init(struct msm_sync *sync,
 	msm_queue_init(&sync->frame_q, "frame");
 	msm_queue_init(&sync->pict_q, "pict");
 
+	wake_lock_init(&sync->wake_suspend_lock, WAKE_LOCK_SUSPEND, "msm_camera_wake");
 	wake_lock_init(&sync->wake_lock, WAKE_LOCK_IDLE, "msm_camera");
 
 	rc = msm_camio_probe_on(pdev);
@@ -2775,6 +2778,7 @@ static int msm_sync_init(struct msm_sync *sync,
 		pr_err("%s: failed to initialize %s\n",
 			__func__,
 			sync->sdata->sensor_name);
+		wake_lock_destroy(&sync->wake_suspend_lock);
 		wake_lock_destroy(&sync->wake_lock);
 		return rc;
 	}
@@ -2787,6 +2791,7 @@ static int msm_sync_init(struct msm_sync *sync,
 
 static int msm_sync_destroy(struct msm_sync *sync)
 {
+	wake_lock_destroy(&sync->wake_suspend_lock);
 	wake_lock_destroy(&sync->wake_lock);
 	return 0;
 }
