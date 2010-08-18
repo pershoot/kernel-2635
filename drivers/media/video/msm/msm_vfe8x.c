@@ -671,6 +671,8 @@ static int vfe_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			p = *(unsigned long *)data;
 
 #ifndef CONFIG_720P_CAMERA
+			b->path = MSM_FRAME_ENC;
+
 			fack.ybufaddr[0] = (uint32_t) (p + b->y_off);
 
 			fack.chromabufaddr[0] = (uint32_t) (p + b->cbcr_off);
