@@ -334,9 +334,9 @@ static int vdec_setbuffers(struct vdec_data *vd, void *argp)
 		return ret;
 	}
 
-	l = kmalloc(sizeof(*l), GFP_KERNEL);
+	l = kzalloc(sizeof(struct vdec_mem_list), GFP_KERNEL);
 	if (!l) {
-		pr_err("%s: kmalloc failed!\n", __func__);
+		pr_err("%s: kzalloc failed!\n", __func__);
 		return -ENOMEM;
 	}
 
@@ -821,9 +821,9 @@ static int vdec_open(struct inode *inode, struct file *file)
 	spin_lock_init(&vd->vdec_list_lock);
 	spin_lock_init(&vd->vdec_mem_list_lock);
 	for (i = 0; i < VDEC_MSG_MAX; i++) {
-		l = kmalloc(sizeof(*l), GFP_KERNEL);
+		l = kzalloc(sizeof(struct vdec_msg_list), GFP_KERNEL);
 		if (!l) {
-			pr_err("%s: kmalloc failed!\n", __func__);
+			pr_err("%s: kzalloc failed!\n", __func__);
 			ret = -ENOMEM;
 			goto vdec_open_err_handle_list;
 		}
