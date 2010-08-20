@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.34.2
-# Fri Aug  6 21:48:42 2010
+# Linux kernel version: 2.6.34.4
+# Fri Aug 20 15:49:40 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -148,12 +148,15 @@ CONFIG_LBDAF=y
 # IO Schedulers
 #
 CONFIG_IOSCHED_NOOP=y
-CONFIG_IOSCHED_DEADLINE=y
+# CONFIG_IOSCHED_DEADLINE is not set
 # CONFIG_IOSCHED_CFQ is not set
-CONFIG_DEFAULT_DEADLINE=y
+CONFIG_IOSCHED_BFQ=y
+CONFIG_CGROUP_BFQIO=y
+# CONFIG_DEFAULT_DEADLINE is not set
 # CONFIG_DEFAULT_CFQ is not set
+CONFIG_DEFAULT_BFQ=y
 # CONFIG_DEFAULT_NOOP is not set
-CONFIG_DEFAULT_IOSCHED="deadline"
+CONFIG_DEFAULT_IOSCHED="bfq"
 # CONFIG_INLINE_SPIN_TRYLOCK is not set
 # CONFIG_INLINE_SPIN_TRYLOCK_BH is not set
 # CONFIG_INLINE_SPIN_LOCK is not set
@@ -1195,128 +1198,22 @@ CONFIG_MEDIA_SUPPORT=y
 #
 # Multimedia core support
 #
-CONFIG_VIDEO_DEV=y
-CONFIG_VIDEO_V4L2_COMMON=y
-# CONFIG_VIDEO_ALLOW_V4L1 is not set
-CONFIG_VIDEO_V4L1_COMPAT=y
+# CONFIG_VIDEO_DEV is not set
 # CONFIG_DVB_CORE is not set
-CONFIG_VIDEO_MEDIA=y
+# CONFIG_VIDEO_MEDIA is not set
 
 #
 # Multimedia drivers
 #
 # CONFIG_IR_CORE is not set
-# CONFIG_MEDIA_ATTACH is not set
-CONFIG_MEDIA_TUNER=y
-CONFIG_MEDIA_TUNER_CUSTOMISE=y
-# CONFIG_MEDIA_TUNER_SIMPLE is not set
-# CONFIG_MEDIA_TUNER_TDA8290 is not set
-# CONFIG_MEDIA_TUNER_TDA827X is not set
-# CONFIG_MEDIA_TUNER_TDA18271 is not set
-# CONFIG_MEDIA_TUNER_TDA9887 is not set
-# CONFIG_MEDIA_TUNER_TEA5761 is not set
-# CONFIG_MEDIA_TUNER_TEA5767 is not set
-# CONFIG_MEDIA_TUNER_MT20XX is not set
-# CONFIG_MEDIA_TUNER_MT2060 is not set
-# CONFIG_MEDIA_TUNER_MT2266 is not set
-# CONFIG_MEDIA_TUNER_MT2131 is not set
-# CONFIG_MEDIA_TUNER_QT1010 is not set
-# CONFIG_MEDIA_TUNER_XC2028 is not set
-# CONFIG_MEDIA_TUNER_XC5000 is not set
-# CONFIG_MEDIA_TUNER_MXL5005S is not set
-# CONFIG_MEDIA_TUNER_MXL5007T is not set
-# CONFIG_MEDIA_TUNER_MC44S803 is not set
-# CONFIG_MEDIA_TUNER_MAX2165 is not set
-CONFIG_VIDEO_V4L2=y
-CONFIG_VIDEO_CAPTURE_DRIVERS=y
-# CONFIG_VIDEO_ADV_DEBUG is not set
-# CONFIG_VIDEO_FIXED_MINOR_RANGES is not set
-# CONFIG_VIDEO_HELPER_CHIPS_AUTO is not set
-
-#
-# Encoders/decoders and other helper chips
-#
-
-#
-# Audio decoders
-#
-# CONFIG_VIDEO_TVAUDIO is not set
-# CONFIG_VIDEO_TDA7432 is not set
-# CONFIG_VIDEO_TDA9840 is not set
-# CONFIG_VIDEO_TDA9875 is not set
-# CONFIG_VIDEO_TEA6415C is not set
-# CONFIG_VIDEO_TEA6420 is not set
-# CONFIG_VIDEO_MSP3400 is not set
-# CONFIG_VIDEO_CS5345 is not set
-# CONFIG_VIDEO_CS53L32A is not set
-# CONFIG_VIDEO_M52790 is not set
-# CONFIG_VIDEO_TLV320AIC23B is not set
-# CONFIG_VIDEO_WM8775 is not set
-# CONFIG_VIDEO_WM8739 is not set
-# CONFIG_VIDEO_VP27SMPX is not set
-
-#
-# RDS decoders
-#
-# CONFIG_VIDEO_SAA6588 is not set
-
-#
-# Video decoders
-#
-# CONFIG_VIDEO_ADV7180 is not set
-# CONFIG_VIDEO_BT819 is not set
-# CONFIG_VIDEO_BT856 is not set
-# CONFIG_VIDEO_BT866 is not set
-# CONFIG_VIDEO_KS0127 is not set
-# CONFIG_VIDEO_OV7670 is not set
-# CONFIG_VIDEO_MT9V011 is not set
-# CONFIG_VIDEO_TCM825X is not set
-# CONFIG_VIDEO_SAA7110 is not set
-# CONFIG_VIDEO_SAA711X is not set
-# CONFIG_VIDEO_SAA717X is not set
-# CONFIG_VIDEO_SAA7191 is not set
-# CONFIG_VIDEO_TVP514X is not set
-# CONFIG_VIDEO_TVP5150 is not set
-# CONFIG_VIDEO_TVP7002 is not set
-# CONFIG_VIDEO_VPX3220 is not set
-
-#
-# Video and audio decoders
-#
-# CONFIG_VIDEO_CX25840 is not set
-
-#
-# MPEG video encoders
-#
-# CONFIG_VIDEO_CX2341X is not set
-
-#
-# Video encoders
-#
-# CONFIG_VIDEO_SAA7127 is not set
-# CONFIG_VIDEO_SAA7185 is not set
-# CONFIG_VIDEO_ADV7170 is not set
-# CONFIG_VIDEO_ADV7175 is not set
-# CONFIG_VIDEO_THS7303 is not set
-# CONFIG_VIDEO_ADV7343 is not set
-
-#
-# Video improvement chips
-#
-# CONFIG_VIDEO_UPD64031A is not set
-# CONFIG_VIDEO_UPD64083 is not set
-# CONFIG_VIDEO_VIVI is not set
-# CONFIG_VIDEO_SAA5246A is not set
-# CONFIG_VIDEO_SAA5249 is not set
-# CONFIG_SOC_CAMERA is not set
 
 #
 # Qualcomm MSM Camera And Video
 #
 CONFIG_MSM_CAMERA=y
 # CONFIG_MSM_CAMERA_DEBUG is not set
-# CONFIG_720P_CAMERA is not set
 CONFIG_MSM_CAMERA_OLD=y
+# CONFIG_720P_CAMERA is not set
 
 #
 # Camera Sensor Selection
@@ -1325,7 +1222,6 @@ CONFIG_MT9T013=y
 # CONFIG_MT9D112 is not set
 # CONFIG_MT9P012 is not set
 # CONFIG_S5K3E2FX is not set
-# CONFIG_RADIO_ADAPTERS is not set
 # CONFIG_DAB is not set
 
 #
