@@ -755,7 +755,6 @@ static int vfe_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 		}
 		break;
 
-	case CMD_AXI_CFG_O1_AND_O2:
 	case CMD_AXI_CFG_SNAP_O1_AND_O2: {
 
 			BUG_ON(!axid);
