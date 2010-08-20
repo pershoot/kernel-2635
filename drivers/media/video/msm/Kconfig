@@ -26,6 +26,12 @@ config MSM_CAMERA_OLD
 	bool "Use old camera implementation"
 	depends on MSM_CAMERA && ARCH_MSM7X00A
 
+config 720P_CAMERA
+        bool "Qualcomm MSM camera with 720P video support"
+        depends on MSM_CAMERA
+        help
+          720P video support
+
 comment "Camera Sensor Selection"
 config MT9T013
 	bool "Sensor mt9t013 (BAYER 3M)"
