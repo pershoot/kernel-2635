@@ -264,15 +264,15 @@ int mahimahi_wifi_power(int on)
 	if (on) {
 		config_gpio_table(wifi_on_gpio_table,
 				  ARRAY_SIZE(wifi_on_gpio_table));
-		mdelay(50);
+		msleep(50);
 	} else {
 		config_gpio_table(wifi_off_gpio_table,
 				  ARRAY_SIZE(wifi_off_gpio_table));
 	}
 
-	mdelay(100);
+	msleep(100);
 	gpio_set_value(MAHIMAHI_GPIO_WIFI_SHUTDOWN_N, on); /* WIFI_SHUTDOWN */
-	mdelay(200);
+	msleep(200);
 
 	mahimahi_wifi_power_state = on;
 	return 0;
