@@ -57,6 +57,12 @@ SCHED_FEAT(LB_SHARES_UPDATE, 1)
 SCHED_FEAT(ASYM_EFF_LOAD, 1)
 
 /*
+ * Push the min_vruntime spread floor value when descheduling a task. This
+ * ensures the spread does not grow beyond control.
+ */
+SCHED_FEAT(DYN_MIN_VRUNTIME, 0)
+
+/*
  * Spin-wait on mutex acquisition when the mutex owner is running on
  * another cpu -- assumes that when the owner is running, it will soon
  * release the lock. Decreases scheduling overhead.
