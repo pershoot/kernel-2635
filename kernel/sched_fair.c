@@ -751,7 +751,10 @@ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int initial)
 		vruntime += sched_vslice(cfs_rq, se);
 
 	/* sleeps up to a single latency don't count. */
-	if (sched_feat(FAIR_SLEEPERS) && !initial) {
+	if (!initial
+	    && (sched_feat(FAIR_SLEEPERS)
+	       || (sched_feat(FAIR_SLEEPERS_TIMER) && se->timer)
+	       || (sched_feat(FAIR_SLEEPERS_INTERACTIVE) && se->interactive))) {
 		unsigned long thresh = sysctl_sched_latency;
 
 		/*
