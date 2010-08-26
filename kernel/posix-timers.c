@@ -402,6 +402,7 @@ static enum hrtimer_restart posix_timer_fn(struct hrtimer *timer)
 	int si_private = 0;
 	enum hrtimer_restart ret = HRTIMER_NORESTART;
 
+	sched_wake_timer_enable();
 	timr = container_of(timer, struct k_itimer, it.real.timer);
 	spin_lock_irqsave(&timr->it_lock, flags);
 
@@ -456,6 +457,7 @@ static enum hrtimer_restart posix_timer_fn(struct hrtimer *timer)
 	}
 
 	unlock_timer(timr, flags);
+	sched_wake_timer_disable();
 	return ret;
 }
 

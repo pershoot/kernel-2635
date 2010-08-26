@@ -1027,12 +1027,14 @@ struct sched_domain;
 #define WF_SYNC		(1 << 0)	/* waker goes to sleep after wakup */
 #define WF_FORK		(1 << 1)	/* child wakeup after fork */
 #define WF_INTERACTIVE	(1 << 2)	/* interactivity-driven wakeup */
+#define WF_TIMER	(1 << 3)	/* timer-driven wakeup */
 
 #define ENQUEUE_WAKEUP	(1 << 0)
 #define ENQUEUE_WAKING	(1 << 1)
 #define ENQUEUE_HEAD	(1 << 2)
 #define ENQUEUE_IO	(1 << 3)
 #define ENQUEUE_LATENCY	(1 << 4)
+#define ENQUEUE_TIMER	(1 << 5)
 
 #define DEQUEUE_SLEEP	(1 << 0)
 
@@ -1129,7 +1131,8 @@ struct sched_entity {
 	struct rb_node		run_node;
 	struct list_head	group_node;
 	unsigned int		on_rq:1,
-				interactive:1;
+				interactive:1,
+				timer:1;
 
 	u64			exec_start;
 	u64			sum_exec_runtime;
@@ -1243,6 +1246,7 @@ struct task_struct {
 	unsigned sched_reset_on_fork:1;		/* Revert to default
 						 * priority/policy on fork */
 	unsigned sched_wake_interactive:4;	/* User-driven wakeup */
+	unsigned sched_wake_timer:4;		/* Timer-driven wakeup */
 
 	pid_t pid;
 	pid_t tgid;
@@ -1513,6 +1517,16 @@ static inline void sched_wake_interactive_enable(void)
 static inline void sched_wake_interactive_disable(void)
 {
 	current->sched_wake_interactive--;
+}
+
+static inline void sched_wake_timer_enable(void)
+{
+	current->sched_wake_timer++;
+}
+
+static inline void sched_wake_timer_disable(void)
+{
+	current->sched_wake_timer--;
 }
 
 /* Future-safe accessor for struct task_struct's cpus_allowed. */

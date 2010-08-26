@@ -1031,6 +1031,7 @@ static void call_timer_fn(struct timer_list *timer, void (*fn)(unsigned long),
 	 */
 	struct lockdep_map lockdep_map = timer->lockdep_map;
 #endif
+	sched_wake_timer_enable();
 	/*
 	 * Couple the lock chain with the lock chain at
 	 * del_timer_sync() by acquiring the lock_map around the fn()
@@ -1055,6 +1056,7 @@ static void call_timer_fn(struct timer_list *timer, void (*fn)(unsigned long),
 		 */
 		preempt_count() = preempt_count;
 	}
+	sched_wake_timer_disable();
 }
 
 #define INDEX(N) ((base->timer_jiffies >> (TVR_BITS + (N) * TVN_BITS)) & TVN_MASK)

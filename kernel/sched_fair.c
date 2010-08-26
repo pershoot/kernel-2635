@@ -780,6 +780,9 @@ enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 		if (sched_feat(INTERACTIVE)
 		    && flags & ENQUEUE_LATENCY && !(flags & ENQUEUE_IO))
 			se->interactive = 1;
+		if (sched_feat(TIMER)
+		    && flags & ENQUEUE_TIMER && !(flags & ENQUEUE_IO))
+			se->timer = 1;
 		place_entity(cfs_rq, se, 0);
 		enqueue_sleeper(cfs_rq, se);
 	}
@@ -926,7 +929,8 @@ static struct sched_entity *pick_next_entity(struct cfs_rq *cfs_rq)
 		se = cfs_rq->last;
 
 	/*
-	 * Prefer the next buddy, only set through the interactivity logic.
+	 * Prefer the next buddy, only set through the interactivity and timer
+	 * logic.
 	 */
 	if (cfs_rq->next && wakeup_preempt_entity(cfs_rq->next, left) < 1)
 		se = cfs_rq->next;
@@ -1677,8 +1681,9 @@ static void check_preempt_wakeup(struct rq *rq, struct task_struct *p, int wake_
 	if (unlikely(se == pse))
 		return;
 
-	if (sched_feat(INTERACTIVE)
-	    && !(wake_flags & WF_FORK) && pse->interactive) {
+	if (!(wake_flags & WF_FORK)
+	    && ((sched_feat(INTERACTIVE) && pse->interactive)
+		|| (sched_feat(TIMER) && pse->timer))) {
 		clear_buddies(cfs_rq, NULL);
 		set_next_buddy(pse);
 		preempt = 1;

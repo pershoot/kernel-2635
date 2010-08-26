@@ -58,6 +58,10 @@ SCHED_FEAT(DYN_MIN_VRUNTIME, 0)
  * Input subsystem next buddy affinity. Not transitive across new task wakeups.
  */
 SCHED_FEAT(INTERACTIVE, 0)
+/*
+ * Timer subsystem next buddy affinity. Not transitive across new task wakeups.
+ */
+SCHED_FEAT(TIMER, 0)
 
 /*
  * Spin-wait on mutex acquisition when the mutex owner is running on

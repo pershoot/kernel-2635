@@ -610,6 +610,7 @@ static void arm_timer(struct k_itimer *timer)
  */
 static void cpu_timer_fire(struct k_itimer *timer)
 {
+	sched_wake_timer_enable();
 	if ((timer->it_sigev_notify & ~SIGEV_THREAD_ID) == SIGEV_NONE) {
 		/*
 		 * User don't want any signal.
@@ -637,6 +638,7 @@ static void cpu_timer_fire(struct k_itimer *timer)
 		 */
 		posix_cpu_timer_schedule(timer);
 	}
+	sched_wake_timer_disable();
 }
 
 /*
