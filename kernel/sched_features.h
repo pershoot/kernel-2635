@@ -59,9 +59,20 @@ SCHED_FEAT(DYN_MIN_VRUNTIME, 0)
  */
 SCHED_FEAT(INTERACTIVE, 0)
 /*
+ * Expedite forks performed from a wakeup chain coming from the input subsystem.
+ * Depends on the INTERACTIVE feature for following the wakeup chain across
+ * threads.
+ */
+SCHED_FEAT(INTERACTIVE_FORK_EXPEDITED, 0)
+/*
  * Timer subsystem next buddy affinity. Not transitive across new task wakeups.
  */
 SCHED_FEAT(TIMER, 0)
+/*
+ * Expedite forks performed from a wakeup chain coming from the timer subsystem.
+ * Depends on the TIMER feature for following the wakeup chain across threads.
+ */
+SCHED_FEAT(TIMER_FORK_EXPEDITED, 0)
 
 /*
  * Spin-wait on mutex acquisition when the mutex owner is running on

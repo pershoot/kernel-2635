@@ -1132,7 +1132,8 @@ struct sched_entity {
 	struct list_head	group_node;
 	unsigned int		on_rq:1,
 				interactive:1,
-				timer:1;
+				timer:1,
+				fork_expedited:1;
 
 	u64			exec_start;
 	u64			sum_exec_runtime;
