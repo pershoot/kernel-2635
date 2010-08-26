@@ -26,13 +26,6 @@ SCHED_FEAT(WAKEUP_PREEMPT, 1)
 SCHED_FEAT(AFFINE_WAKEUPS, 1)
 
 /*
- * Prefer to schedule the task we woke last (assuming it failed
- * wakeup-preemption), since its likely going to consume data we
- * touched, increases cache locality.
- */
-SCHED_FEAT(NEXT_BUDDY, 0)
-
-/*
  * Prefer to schedule the task that ran last (when we did
  * wake-preempt) as that likely will touch the same data, increases
  * cache locality.
@@ -61,6 +54,10 @@ SCHED_FEAT(ASYM_EFF_LOAD, 1)
  * ensures the spread does not grow beyond control.
  */
 SCHED_FEAT(DYN_MIN_VRUNTIME, 0)
+/*
+ * Input subsystem next buddy affinity. Not transitive across new task wakeups.
+ */
+SCHED_FEAT(INTERACTIVE, 0)
 
 /*
  * Spin-wait on mutex acquisition when the mutex owner is running on
