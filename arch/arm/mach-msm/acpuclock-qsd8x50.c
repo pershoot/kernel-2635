@@ -72,12 +72,12 @@ struct clkctl_acpu_speed {
 
 struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{  19200, CCTL(CLK_TCXO, 1),		SRC_RAW, 0, 0, 975 },
-	{ 128000, CCTL(CLK_TCXO, 1),		SRC_AXI, 0, 0, 975 },
-	{ 245000, CCTL(CLK_MODEM_PLL, 1),	SRC_RAW, 0, 0, 1000 },
-	{ 256000, CCTL(CLK_GLOBAL_PLL, 3),	SRC_RAW, 0, 0, 1000 },
+	{ 128000, CCTL(CLK_TCXO, 1),		SRC_AXI, 0, 0, 1000 },
+	{ 245000, CCTL(CLK_MODEM_PLL, 1),	SRC_RAW, 0, 0, 1025 },
+	{ 256000, CCTL(CLK_GLOBAL_PLL, 3),	SRC_RAW, 0, 0, 1025 },
 	{ 384000, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0A, 0, 1025 },
 	{ 422400, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0B, 0, 1025 },
-	{ 460800, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0C, 0, 1025 },
+	{ 460800, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0C, 0, 1050 },
 	{ 499200, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0D, 0, 1050 },
 	{ 537600, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0E, 0, 1075 },
 	{ 576000, CCTL(CLK_TCXO, 1),		SRC_SCPLL, 0x0F, 0, 1100 },
@@ -418,15 +418,15 @@ static void __init acpuclk_init(void)
 		BUG();
 	}
 
-	/* Move to 883MHz for boot, which is a safe frequency
+	/* Move to 806MHz for boot, which is a safe frequency
 	 * for all versions of Scorpion at the moment.
 	 */
 	speed = acpu_freq_tbl;
 	for (;;) {
-		if (speed->acpu_khz == 883200)
+		if (speed->acpu_khz == 806400)
 			break;
 		if (speed->acpu_khz == 0) {
-			pr_err("acpuclk_init: cannot find 883MHz\n");
+			pr_err("acpuclk_init: cannot find 806MHz\n");
 			BUG();
 		}
 		speed++;
