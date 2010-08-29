@@ -372,7 +372,7 @@ static int mahimahi_ts_power(int on)
 	} else {
 		gpio_set_value(MAHIMAHI_GPIO_TP_LS_EN, 0);
 		gpio_set_value(MAHIMAHI_GPIO_TP_EN, 0);
-		usleep(50);
+		udelay(50);
 	}
 
 	return 0;
