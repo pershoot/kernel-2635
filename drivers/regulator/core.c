@@ -981,6 +981,29 @@ static int set_consumer_device_supply(struct regulator_dev *rdev,
 	return 0;
 }
 
+static void unset_consumer_device_supply(struct regulator_dev *rdev,
+        const char *consumer_dev_name, struct device *consumer_dev)
+{
+        struct regulator_map *node, *n;
+
+        if (consumer_dev && !consumer_dev_name)
+                consumer_dev_name = dev_name(consumer_dev);
+
+        list_for_each_entry_safe(node, n, &regulator_map_list, list) {
+                if (rdev != node->regulator)
+                        continue;
+
+                if (consumer_dev_name && node->dev_name &&
+                    strcmp(consumer_dev_name, node->dev_name))
+                        continue;
+
+                list_del(&node->list);
+                kfree(node->dev_name);
+                kfree(node);
+                return;
+        }
+}
+
 static void unset_regulator_supplies(struct regulator_dev *rdev)
 {
 	struct regulator_map *node, *n;
