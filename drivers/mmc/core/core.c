@@ -1363,12 +1363,6 @@ int mmc_resume_host(struct mmc_host *host)
 		}
 	}
 	mmc_bus_put(host);
-	
-	/*
-	 * We add a slight delay here so that resume can progress
-	 * in parallel
-	 */
-	mmc_detect_change(host, 1);
 
 	return err;
 }
