@@ -2475,9 +2475,6 @@ static inline void update_sg_lb_stats(struct sched_domain *sd,
 	sgs->group_capacity =
 		DIV_ROUND_CLOSEST(group->cpu_power, SCHED_LOAD_SCALE);
 
- 	if (!sgs->group_capacity)
- 		sgs->group_capacity = fix_small_capacity(sd, group);
-
 	if (sgs->group_capacity > sgs->sum_nr_running)
 		sgs->group_has_capacity = 1;
 }
