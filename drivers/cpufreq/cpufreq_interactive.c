@@ -53,13 +53,13 @@ static cpumask_t work_cpumask;
  * default is 50ms.
  */
 
-#ifdef CONFIG_ARCH_MSM7X00A
+#if defined (CONFIG_ARCH_MSM7X00A)
 
 #define DEFAULT_MIN_SAMPLE_TIME 35000;
 
 #endif
 
-#ifdef CONFIG_ARCH_MSM_SCORPION
+#if defined (CONFIG_ARCH_MSM_SCORPION)
 
 #define DEFAULT_MIN_SAMPLE_TIME 45000;
 
