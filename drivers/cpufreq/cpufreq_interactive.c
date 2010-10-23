@@ -81,13 +81,13 @@ struct cpufreq_governor cpufreq_gov_interactive = {
 	.name = "interactive",
 	.governor = cpufreq_governor_interactive,
 
-#ifdef CONFIG_ARCH_MSM7X00A
+#if defined (CONFIG_ARCH_MSM7X00A)
 
         .max_transition_latency = 7000000,
 
 #endif
 
-#ifdef CONFIG_ARCH_MSM_SCORPION
+#if defined (CONFIG_ARCH_MSM_SCORPION)
 
 	.max_transition_latency = 8000000,
 
