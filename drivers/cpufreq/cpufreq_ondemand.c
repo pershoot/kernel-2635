@@ -28,7 +28,7 @@
  * It helps to keep variable names smaller, simpler
  */
 
-#ifdef CONFIG_ARCH_MSM7X00A
+#if defined (CONFIG_ARCH_MSM7X00A)
 
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL         (10)
 #define DEF_FREQUENCY_UP_THRESHOLD              (65)
@@ -40,7 +40,7 @@
 
 #endif
 
-#ifdef CONFIG_ARCH_MSM_SCORPION
+#if defined (CONFIG_ARCH_MSM_SCORPION)
 
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(10)
 #define DEF_FREQUENCY_UP_THRESHOLD		(80)
