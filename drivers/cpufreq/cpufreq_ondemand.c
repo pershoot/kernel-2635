@@ -38,9 +38,7 @@
 #define MIN_FREQUENCY_UP_THRESHOLD              (11)
 #define MAX_FREQUENCY_UP_THRESHOLD              (100)
 
-#endif
-
-#if defined (CONFIG_ARCH_MSM_SCORPION)
+#elif defined (CONFIG_ARCH_MSM_SCORPION)
 
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(10)
 #define DEF_FREQUENCY_UP_THRESHOLD		(80)
