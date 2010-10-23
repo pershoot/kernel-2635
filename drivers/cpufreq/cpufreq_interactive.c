@@ -57,9 +57,7 @@ static cpumask_t work_cpumask;
 
 #define DEFAULT_MIN_SAMPLE_TIME 35000;
 
-#endif
-
-#if defined (CONFIG_ARCH_MSM_SCORPION)
+#elif defined (CONFIG_ARCH_MSM_SCORPION)
 
 #define DEFAULT_MIN_SAMPLE_TIME 45000;
 
@@ -85,9 +83,7 @@ struct cpufreq_governor cpufreq_gov_interactive = {
 
         .max_transition_latency = 7000000,
 
-#endif
-
-#if defined (CONFIG_ARCH_MSM_SCORPION)
+#elif defined (CONFIG_ARCH_MSM_SCORPION)
 
 	.max_transition_latency = 8000000,
 
