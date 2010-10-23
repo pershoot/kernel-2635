@@ -4,8 +4,8 @@
  * rip the spread apart.
  */
 SCHED_FEAT(FAIR_SLEEPERS, 0)		 /* Apply to all wakeups */
-SCHED_FEAT(FAIR_SLEEPERS_INTERACTIVE, 0) /* Selects interactive wakeups */
-SCHED_FEAT(FAIR_SLEEPERS_TIMER, 0)	 /* Selects timer-driven wakeups */
+SCHED_FEAT(FAIR_SLEEPERS_INTERACTIVE, 1) /* Selects interactive wakeups */
+SCHED_FEAT(FAIR_SLEEPERS_TIMER, 1)	 /* Selects timer-driven wakeups */
 SCHED_FEAT(GENTLE_FAIR_SLEEPERS, 1)
 
 /*
