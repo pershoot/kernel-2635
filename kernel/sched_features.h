@@ -65,7 +65,7 @@ SCHED_FEAT(INTERACTIVE, 1)
  * Depends on the INTERACTIVE feature for following the wakeup chain across
  * threads.
  */
-SCHED_FEAT(INTERACTIVE_FORK_EXPEDITED, 0)
+SCHED_FEAT(INTERACTIVE_FORK_EXPEDITED, 1)
 /*
  * Timer subsystem next buddy affinity. Not transitive across new task wakeups.
  */
@@ -74,7 +74,7 @@ SCHED_FEAT(TIMER, 1)
  * Expedite forks performed from a wakeup chain coming from the timer subsystem.
  * Depends on the TIMER feature for following the wakeup chain across threads.
  */
-SCHED_FEAT(TIMER_FORK_EXPEDITED, 0)
+SCHED_FEAT(TIMER_FORK_EXPEDITED, 1)
 
 /*
  * Spin-wait on mutex acquisition when the mutex owner is running on
