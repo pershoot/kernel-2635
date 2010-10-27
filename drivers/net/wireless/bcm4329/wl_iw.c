@@ -7350,8 +7350,6 @@ wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data)
 	uint32 datalen = ntoh32(e->datalen);
 	uint32 status =  ntoh32(e->status);
 	uint32 toto;
-	static uint32 roam_no_success = 0;
-	static bool roam_no_success_send = FALSE;
 
 	memset(&wrqu, 0, sizeof(wrqu));
 	memset(extra, 0, sizeof(extra));
@@ -7416,25 +7414,14 @@ wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data)
 		cmd = IWEVREGISTERED;
 		break;
 	case WLC_E_ROAM:
-		if (status == WLC_E_STATUS_SUCCESS) {
-			memcpy(wrqu.addr.sa_data, &e->addr.octet, ETHER_ADDR_LEN);
-			wrqu.addr.sa_family = ARPHRD_ETHER;
-			cmd = SIOCGIWAP;
+		if (status != WLC_E_STATUS_SUCCESS) {
+			WL_ERROR(("ROAMING did not succeeded, keep status Quo\n"));
+			goto wl_iw_event_end;
 		}
-		else if (status == WLC_E_STATUS_NO_NETWORKS) {
-			roam_no_success++;
-			if ((roam_no_success == 5) && (roam_no_success_send == FALSE)) {
-				roam_no_success_send = TRUE;
-				bzero(wrqu.addr.sa_data, ETHER_ADDR_LEN);
-				bzero(&extra, ETHER_ADDR_LEN);
-				cmd = SIOCGIWAP;
-				WL_ERROR(("%s  ROAMING did not succeeded , send Link Down\n", \
-					__FUNCTION__));
-			} else {
-				WL_TRACE(("##### ROAMING did not succeeded %d\n", roam_no_success));
-				goto wl_iw_event_end;
-			}
-		}
+
+		memcpy(wrqu.addr.sa_data, &e->addr.octet, ETHER_ADDR_LEN);
+		wrqu.addr.sa_family = ARPHRD_ETHER;
+		cmd = SIOCGIWAP;
 		break;
 	case WLC_E_DEAUTH_IND:
 	case WLC_E_DISASSOC_IND:
@@ -7490,8 +7477,6 @@ wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data)
 				wl_iw_send_priv_event(priv_dev, "AP_UP");
 			} else {
 				WL_TRACE(("STA_LINK_UP\n"));
-				roam_no_success_send = FALSE;
-				roam_no_success = 0;
 			}
 #endif
 			WL_TRACE(("Link UP\n"));
