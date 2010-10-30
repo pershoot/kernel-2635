@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.35.7
-# Wed Oct 27 19:37:21 2010
+# Linux kernel version: 2.6.35.8
+# Sat Oct 30 14:20:11 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
