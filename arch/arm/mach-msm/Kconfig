@@ -109,6 +109,14 @@ config MSM_REMOTE_SPINLOCK
 config MSM_LEGACY_7X00A_AMSS
 	bool
 
+config TURBO_MODE
+	bool "Turbo mode"
+	depends on ARCH_MSM7225 || ARCH_MSM7X00A
+	default n
+	help
+	  This option is used to indicate hardware support for running the
+	  memory bus at a higher speed.(only for 7X00A/7225)
+
 config MSM_AMSS_VERSION
 	int
 	default 6210 if MSM_AMSS_VERSION_6210
@@ -255,13 +263,6 @@ config MACH_MSM7X30_SURF
 	bool "QCT SURF7x30 Board"
 	help
 	  Select this to support the Qualcomm SURF7X30 development board
-
-config JESUS_PHONE
-	depends on ARCH_QSD8X50 || ARCH_MSM7X00A || ARCH_MSM7227 || ARCH_MSM7225
-	default n
-	bool "Enable Jesus Phone mode (DANGEROUS)"
-	help
-	 Enable support for dangerous acpuclock frequencies/voltages.
 
 config HTC_HEADSET
 	tristate "HTC 2 Wire detection driver"
