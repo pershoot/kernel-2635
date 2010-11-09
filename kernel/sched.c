@@ -2276,13 +2276,6 @@ static int try_to_wake_up(struct task_struct *p, unsigned int state,
 	unsigned long en_flags = ENQUEUE_WAKEUP;
 	struct rq *rq;
 
-	if (sched_feat(INTERACTIVE) && !(wake_flags & WF_FORK)) {
-		if (current->sched_wake_interactive ||
-				wake_flags & WF_INTERACTIVE ||
-				current->se.interactive)
-			en_flags |= ENQUEUE_LATENCY;
-	}
-
 	this_cpu = get_cpu();
 
 	smp_wmb();
@@ -3734,11 +3727,8 @@ need_resched_nonpreemptible:
 	if (prev->state && !(preempt_count() & PREEMPT_ACTIVE)) {
 		if (unlikely(signal_pending_state(prev->state, prev)))
 			prev->state = TASK_RUNNING;
-		else {
-			if (sched_feat(INTERACTIVE))
-				prev->se.interactive = 0;
+		else
 			deactivate_task(rq, prev, DEQUEUE_SLEEP);
-		}
 		switch_count = &prev->nvcsw;
 	}
 
