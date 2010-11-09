@@ -69,6 +69,11 @@ extern void synchronize_sched_expedited(void);
 extern void synchronize_sched(void);
 extern int sched_expedited_torture_stats(char *page);
 
+#if defined(CONFIG_CLASSIC_RCU)
+/* Internal to kernel */
+extern void rcu_init(void);
+#endif
+
 static inline void __rcu_read_lock_bh(void)
 {
 	local_bh_disable();
