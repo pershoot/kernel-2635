@@ -3,7 +3,6 @@
  * them to run sooner, but does not allow tons of sleepers to
  * rip the spread apart.
  */
-SCHED_FEAT(FAIR_SLEEPERS, 0)		 /* Apply to all wakeups */
 SCHED_FEAT(GENTLE_FAIR_SLEEPERS, 1)
 
 /*
