@@ -301,9 +301,9 @@ static inline s64 entity_key(struct cfs_rq *cfs_rq, struct sched_entity *se)
 	return se->vruntime - cfs_rq->min_vruntime;
 }
 
-static void update_min_vruntime(struct cfs_rq *cfs_rq, unsigned long delta_exec)
+static void update_min_vruntime(struct cfs_rq *cfs_rq)
 {
-	u64 vruntime = cfs_rq->min_vruntime, new_vruntime;
+	u64 vruntime = cfs_rq->min_vruntime;
 
 	if (cfs_rq->curr)
 		vruntime = cfs_rq->curr->vruntime;
@@ -319,12 +319,7 @@ static void update_min_vruntime(struct cfs_rq *cfs_rq, unsigned long delta_exec)
 			vruntime = min_vruntime(vruntime, se->vruntime);
 	}
 
-	new_vruntime = cfs_rq->min_vruntime;
-	if (sched_feat(DYN_MIN_VRUNTIME) && delta_exec)
-		new_vruntime += calc_delta_mine(delta_exec, NICE_0_LOAD,
-						&cfs_rq->load);
-
-	cfs_rq->min_vruntime = max_vruntime(new_vruntime, vruntime);
+	cfs_rq->min_vruntime = max_vruntime(cfs_rq->min_vruntime, vruntime);
 }
 
 /*
@@ -518,7 +513,7 @@ __update_curr(struct cfs_rq *cfs_rq, struct sched_entity *curr,
 	delta_exec_weighted = calc_delta_fair(delta_exec, curr);
 
 	curr->vruntime += delta_exec_weighted;
-	update_min_vruntime(cfs_rq, delta_exec);
+	update_min_vruntime(cfs_rq);
 }
 
 static void update_curr(struct cfs_rq *cfs_rq)
@@ -830,7 +825,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 	if (se != cfs_rq->curr)
 		__dequeue_entity(cfs_rq, se);
 	account_entity_dequeue(cfs_rq, se);
-	update_min_vruntime(cfs_rq, 0);
+	update_min_vruntime(cfs_rq);
 
 	/*
 	 * Normalize the entity after updating the min_vruntime because the
