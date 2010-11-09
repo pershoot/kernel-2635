@@ -2283,13 +2283,6 @@ static int try_to_wake_up(struct task_struct *p, unsigned int state,
 			en_flags |= ENQUEUE_LATENCY;
 	}
 
-	if (sched_feat(TIMER) && !(wake_flags & WF_FORK)) {
-		if (current->sched_wake_timer ||
-				wake_flags & WF_TIMER ||
-				current->se.timer)
-			en_flags |= ENQUEUE_TIMER;
-	}
-
 	this_cpu = get_cpu();
 
 	smp_wmb();
@@ -3744,8 +3737,6 @@ need_resched_nonpreemptible:
 		else {
 			if (sched_feat(INTERACTIVE))
 				prev->se.interactive = 0;
-			if (sched_feat(TIMER))
-				prev->se.timer = 0;
 			deactivate_task(rq, prev, DEQUEUE_SLEEP);
 		}
 		switch_count = &prev->nvcsw;
