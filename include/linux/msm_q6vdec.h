@@ -81,7 +81,7 @@ enum {
 enum {
 	VDEC_COLOR_FORMAT_NV21 = 0x01,
 	VDEC_COLOR_FORMAT_NV21_YAMOTO = 0x02
-};
+   };
 
 struct vdec_input_buf_info {
 	u32 offset;

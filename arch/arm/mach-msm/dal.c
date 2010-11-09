@@ -15,6 +15,7 @@
  */
 
 #include <linux/kernel.h>
+#include <linux/slab.h>
 #include <linux/spinlock.h>
 #include <linux/mutex.h>
 #include <linux/list.h>
@@ -22,10 +23,10 @@
 #include <linux/wait.h>
 #include <linux/errno.h>
 
-#include <linux/slab.h>
 #include <linux/delay.h>
 
 #include <mach/msm_smd.h>
+#include <mach/msm_qdsp6_audio.h>
 
 #include "dal.h"
 
@@ -160,7 +161,7 @@ void dal_trace_dump(struct dal_client *c)
 
 	for (n = c->tr_tail; n != c->tr_head; n = (n + 1) & TRACE_LOG_MASK) {
 		dt = c->tr_log + n;
-		len = dt->hdr.length;
+		len = dt->hdr.length - sizeof(dt->hdr);
 		if (len > TRACE_DATA_MAX)
 			len = TRACE_DATA_MAX;
 		dal_trace_print(&dt->hdr, dt->data, len, dt->timestamp);
@@ -366,7 +367,7 @@ int dal_call_raw(struct dal_client *client,
 		pr_err("dal: call timed out. dsp is probably dead.\n");
 		dal_trace_print(hdr, data, data_len, 0);
 #if defined(CONFIG_MSM_QDSP6)
-		BUG();
+		q6audio_dsp_not_responding();
 #endif
 	}
 
@@ -623,43 +624,4 @@ int dal_call_f13(struct dal_client *client, uint32_t ddi, void *ibuf1,
 		memcpy(obuf, &tmp[2], tmp[1]);
 	}
 	return res;
-}
-
-int dal_call_f14(struct dal_client *client, uint32_t ddi, void *ibuf,
-                 uint32_t ilen, void *obuf1, uint32_t olen1, void *obuf2,
-                 uint32_t olen2, uint32_t *oalen2)
-{
-        uint32_t tmp[128];
-        int res;
-        int param_idx = 0;
-
-        if (olen1 + olen2 + 8 > DAL_DATA_MAX ||
-                ilen + 12 > DAL_DATA_MAX)
-                return -EINVAL;
-
-        tmp[param_idx] = ilen;
-        param_idx++;
-
-        memcpy(&tmp[param_idx], ibuf, ilen);
-        param_idx += DIV_ROUND_UP(ilen, 4);
-
-        tmp[param_idx++] = olen1;
-        tmp[param_idx++] = olen2;
-        res = dal_call(client, ddi, 14, tmp, param_idx * 4, tmp, sizeof(tmp));
-
-        if (res >= 4)
-                res = (int)tmp[0];
-
-        if (!res) {
-                if (tmp[1] > olen1)
-                        return -EIO;
-                param_idx = DIV_ROUND_UP(tmp[1], 4) + 2;
-                if (tmp[param_idx] > olen2)
-                        return -EIO;
-
-                memcpy(obuf1, &tmp[2], tmp[1]);
-                memcpy(obuf2, &tmp[param_idx+1], tmp[param_idx]);
-                *oalen2 = tmp[param_idx];
-        }
-        return res;
 }
