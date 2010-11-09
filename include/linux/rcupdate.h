@@ -69,6 +69,9 @@ extern void synchronize_sched_expedited(void);
 extern void synchronize_sched(void);
 extern int sched_expedited_torture_stats(char *page);
 
+/* Internal to kernel */
+extern void rcu_init(void);
+
 static inline void __rcu_read_lock_bh(void)
 {
 	local_bh_disable();
