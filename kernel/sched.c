@@ -2492,14 +2492,6 @@ void sched_fork(struct task_struct *p, int clone_flags)
 	if (!rt_prio(p->prio))
 		p->sched_class = &fair_sched_class;
 
-	if ((sched_feat(INTERACTIVE_FORK_EXPEDITED)
-	     && (current->sched_wake_interactive || current->se.interactive))
-	    || (sched_feat(TIMER_FORK_EXPEDITED)
-	     && (current->sched_wake_timer || current->se.timer)))
-		p->se.fork_expedited = 1;
-	else
-		p->se.fork_expedited = 0;
-
 	if (p->sched_class->task_fork)
 		p->sched_class->task_fork(p);
 
