@@ -17,12 +17,15 @@
  */
 
 #include <linux/msm_adsp.h>
+#include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <linux/android_pmem.h>
 #include <mach/msm_adsp.h>
 #include <linux/delay.h>
 #include <linux/wait.h>
+#include <linux/sched.h>
+#include <linux/clk.h>
 #include "msm_vfe7x.h"
 
 #define QDSP_CMDQUEUE QDSP_vfeCommandQueue
@@ -226,6 +229,8 @@ static int vfe_7x_stop(void)
 
 static void vfe_7x_release(struct platform_device *pdev)
 {
+	struct msm_sensor_ctrl *sctrl =
+		&((struct msm_sync *)vfe_syncdata)->sctrl;
 	mutex_lock(&vfe_lock);
 	vfe_syncdata = NULL;
 	mutex_unlock(&vfe_lock);
@@ -238,6 +243,9 @@ static void vfe_7x_release(struct platform_device *pdev)
 
 	msm_adsp_disable(qcam_mod);
 	msm_adsp_disable(vfe_mod);
+
+	if (sctrl)
+		sctrl->s_release();
 
 	msm_adsp_put(qcam_mod);
 	msm_adsp_put(vfe_mod);
@@ -405,34 +413,34 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			}
 
 			scfg =
-				kmalloc(sizeof(struct vfe_stats_we_cfg), 
-					GFP_ATOMIC);
-				if (!scfg) {
-					rc = -ENOMEM;
-					goto config_failure;
-				}
+			    kmalloc(sizeof(struct vfe_stats_we_cfg),
+				    GFP_ATOMIC);
+			if (!scfg) {
+				rc = -ENOMEM;
+				goto config_failure;
+			}
 
-				if (vfecmd->length != sizeof(typeof(*scfg))) {
+			if (vfecmd->length != sizeof(typeof(*scfg))) {
 				rc = -EIO;
 				pr_err
 				    ("msm_camera: %s: cmd %d: "\
 				     "user-space data size %d "\
 				     "!= kernel data size %d\n", __func__,
-				cmd->cmd_type, vfecmd->length,
-				sizeof(typeof(*scfg)));
-			goto config_failure;
+				     cmd->cmd_type, vfecmd->length,
+				     sizeof(typeof(*scfg)));
+				goto config_failure;
 			}
 
 			if (copy_from_user(scfg,
-				(void __user *)(vfecmd->value),
-				vfecmd->length)) {
+					   (void __user *)(vfecmd->value),
+					   vfecmd->length)) {
 
 				rc = -EFAULT;
 				goto config_done;
 			}
 
 			CDBG("STATS_ENABLE: bufnum = %d, enabling = %d\n",
-				axid->bufnum1, scfg->wb_expstatsenable);
+			     axid->bufnum1, scfg->wb_expstatsenable);
 
 			if (axid->bufnum1 > 0) {
 				regptr = axid->region;
@@ -447,7 +455,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 					regptr++;
 				}
 
-					cmd_data = scfg;
+				cmd_data = scfg;
 
 			} else {
 				rc = -EINVAL;
@@ -465,33 +473,34 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			}
 
 			sfcfg =
-				kmalloc(sizeof(struct vfe_stats_af_cfg),
-					GFP_ATOMIC);
+			    kmalloc(sizeof(struct vfe_stats_af_cfg),
+				    GFP_ATOMIC);
 
-				if (!sfcfg) {
-					rc = -ENOMEM;
-					goto config_failure;
-				}
+			if (!sfcfg) {
+				rc = -ENOMEM;
+				goto config_failure;
+			}
 
-				if (vfecmd->length > sizeof(typeof(*sfcfg))) {
+			if (vfecmd->length > sizeof(typeof(*sfcfg))) {
 				pr_err
 				    ("msm_camera: %s: cmd %d: user-space "\
 				     "data %d exceeds kernel buffer %d\n",
-					__func__, cmd->cmd_type, vfecmd->length,
-					sizeof(typeof(*sfcfg)));
+				     __func__, cmd->cmd_type, vfecmd->length,
+				     sizeof(typeof(*sfcfg)));
 				rc = -EIO;
 				goto config_failure;
 			}
 
-				if (copy_from_user(sfcfg,
-					(void __user *)(vfecmd->value),
-					vfecmd->length)) {
+			if (copy_from_user(sfcfg,
+					   (void __user *)(vfecmd->value),
+					   vfecmd->length)) {
+
 				rc = -EFAULT;
 				goto config_done;
 			}
 
 			CDBG("AF_ENABLE: bufnum = %d, enabling = %d\n",
-				axid->bufnum1, sfcfg->af_enable);
+			     axid->bufnum1, sfcfg->af_enable);
 
 			if (axid->bufnum1 > 0) {
 				regptr = axid->region;
@@ -564,7 +573,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			CDBG("vfe_7x_config: CMD_STATS_AF_BUF_RELEASE\n");
 			if (!data) {
 				rc = -EFAULT;
-				goto config_error;
+				goto config_failure;
 			}
 
 			sack.header = STATS_AF_ACK;
@@ -578,25 +587,24 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 
 	case CMD_GENERAL:
 	case CMD_STATS_DISABLE:{
-		if (vfecmd->length > sizeof(buf)) {
-			cmd_data_alloc =
-				cmd_data =
-				kmalloc(vfecmd->length, GFP_ATOMIC);
-			if (!cmd_data) {
+			if (vfecmd->length > sizeof(buf)) {
+				cmd_data_alloc =
+				    cmd_data =
+				    kmalloc(vfecmd->length, GFP_ATOMIC);
+				if (!cmd_data) {
 					rc = -ENOMEM;
 					goto config_failure;
 				}
-				} else
-					cmd_data = buf;
+			} else
+				cmd_data = buf;
 
-				if (copy_from_user(cmd_data,
-					(void __user *)(vfecmd->value),
-					vfecmd->length)) {
+			if (copy_from_user(cmd_data,
+					   (void __user *)(vfecmd->value),
+					   vfecmd->length)) {
 
 				rc = -EFAULT;
 				goto config_done;
 			}
-			vfecmd.value = tmp;
 
 			if (vfecmd->queue == QDSP_CMDQUEUE) {
 				switch (*(uint32_t *) cmd_data) {
@@ -636,7 +644,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			}
 
 			if (copy_from_user(axio, (void *)(vfecmd->value),
-				sizeof(struct axiout))) {
+					   sizeof(struct axiout))) {
 				rc = -EFAULT;
 				goto config_done;
 			}
@@ -655,14 +663,14 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 				goto config_failure;
 			}
 
-				axio = kmalloc(sizeof(struct axiout), GFP_ATOMIC);
-				if (!axio) {
-					rc = -ENOMEM;
-					goto config_failure;
+			axio = kmalloc(sizeof(struct axiout), GFP_ATOMIC);
+			if (!axio) {
+				rc = -ENOMEM;
+				goto config_failure;
 			}
 
 			if (copy_from_user(axio, (void __user *)(vfecmd->value),
-				sizeof(struct axiout))) {
+					   sizeof(struct axiout))) {
 				rc = -EFAULT;
 				goto config_done;
 			}
@@ -686,7 +694,7 @@ static int vfe_7x_config(struct msm_vfe_cfg_cmd *cmd, void *data)
 			}
 
 			if (copy_from_user(axio, (void __user *)(vfecmd->value),
-				sizeof(struct axiout))) {
+					   sizeof(struct axiout))) {
 				rc = -EFAULT;
 				goto config_done;
 			}
@@ -710,7 +718,7 @@ config_send:
 
 config_done:
 	if (cmd_data_alloc != NULL)
-	kfree(cmd_data_alloc);
+		kfree(cmd_data_alloc);
 
 config_failure:
 	kfree(scfg);

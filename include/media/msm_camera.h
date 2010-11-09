@@ -1,19 +1,5 @@
-/* Copyright (c) 2009, Code Aurora Forum. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301, USA.
- *
+/*
+ * Copyright (C) 2008-2009 QUALCOMM Incorporated.
  */
 
 #ifndef __LINUX_MSM_CAMERA_H
@@ -106,12 +92,6 @@
 #define MSM_CAM_IOCTL_ENABLE_OUTPUT_IND \
 	_IOW(MSM_CAM_IOCTL_MAGIC, 25, uint32_t *)
 
-#define MSM_CAM_IOCTL_AF_CTRL \
-	_IOR(MSM_CAM_IOCTL_MAGIC, 26, struct msm_ctrl_cmt_t *)
-
-#define MSM_CAM_IOCTL_AF_CTRL_DONE \
-	_IOW(MSM_CAM_IOCTL_MAGIC, 27, struct msm_ctrl_cmt_t *)
-
 #define MAX_SENSOR_NUM  3
 #define MAX_SENSOR_NAME 32
 
@@ -184,9 +164,9 @@ struct msm_camera_cfg_cmd {
 
 #ifdef CONFIG_720P_CAMERA
 #define CMD_GENERAL 0
-#define CMD_AXI_CFG_SNAP            1
-#define CMD_AXI_CFG_PREVIEW                 2
-#define CMD_AXI_CFG_VIDEO                   3
+#define CMD_AXI_CFG_SNAP    	    1
+#define CMD_AXI_CFG_PREVIEW		    2
+#define CMD_AXI_CFG_VIDEO		    3
 #define CMD_RAW_PICT_AXI_CFG        4
 
 #define CMD_FRAME_BUF_RELEASE       5
@@ -221,6 +201,13 @@ struct msm_camera_cfg_cmd {
 #define UPDATE_STATS_INVALID        31
 #else
 
+//Just for build pass (Horng test)
+//------------------------------------
+#define CMD_AXI_CFG_SNAP    	    1
+#define CMD_AXI_CFG_PREVIEW		    2
+#define CMD_AXI_CFG_VIDEO		    3
+//------------------------------------
+
 #define CMD_GENERAL			0
 #define CMD_AXI_CFG_OUT1		1
 #define CMD_AXI_CFG_SNAP_O1_AND_O2	2
@@ -241,31 +228,6 @@ struct msm_camera_cfg_cmd {
 #define CMD_STATS_AF_BUF_RELEASE	17
 #define CMD_STATS_ENABLE        18
 #define UPDATE_STATS_INVALID		19
-
-#define CMD_STATS_AEC_ENABLE		20
-#define CMD_STATS_AWB_ENABLE		21
-#define CMD_STATS_AEC_AXI_CFG		22
-#define CMD_STATS_AWB_AXI_CFG		23
-#define CMD_STATS_RS_AXI_CFG		24
-#define CMD_STATS_CS_AXI_CFG		25
-#define CMD_STATS_IHIST_AXI_CFG		26
-#define CMD_STATS_SKIN_AXI_CFG		27
-#define CMD_STATS_AEC_BUF_RELEASE	28
-#define CMD_STATS_AWB_BUF_RELEASE	29
-#define CMD_STATS_RS_BUF_RELEASE	30
-#define CMD_STATS_CS_BUF_RELEASE	31
-#define CMD_STATS_IHIST_BUF_RELEASE	32
-#define CMD_STATS_SKIN_BUF_RELEASE	33
-
-#define CMD_AXI_CFG_SNAP_GEMINI		34
-#define CMD_AXI_CFG_SNAP		35
-#define CMD_AXI_CFG_PREVIEW		36
-#define CMD_AXI_CFG_VIDEO		37
-
-#define CMD_STATS_IHIST_ENABLE 38
-#define CMD_STATS_RS_ENABLE 39
-#define CMD_STATS_CS_ENABLE 40
-#define CMD_AXI_CFG_O1_AND_O2	41 /* output1 and output2 */
 
 #endif
 
@@ -300,6 +262,12 @@ struct camera_enable_cmd {
 
 #else
 
+//Just for build pass (Horng test)
+//------------------------------------
+#define MSM_PMEM_VIDEO        0
+#define MSM_PMEM_PREVIEW      1
+//------------------------------------
+
 #define MSM_PMEM_OUTPUT1		0
 #define MSM_PMEM_OUTPUT2		1
 #define MSM_PMEM_OUTPUT1_OUTPUT2	2
@@ -308,22 +276,14 @@ struct camera_enable_cmd {
 #define MSM_PMEM_RAW_MAINIMG		5
 #define MSM_PMEM_AEC_AWB		6
 #define MSM_PMEM_AF			7
-#define MSM_PMEM_AEC			8
-#define MSM_PMEM_AWB			9
-#define MSM_PMEM_RS		    	10
-#define MSM_PMEM_CS	    		11
-#define MSM_PMEM_IHIST			12
-#define MSM_PMEM_SKIN			13
-#define MSM_PMEM_VIDEO			14
-#define MSM_PMEM_PREVIEW		15
-#define MSM_PMEM_MAX			16
+#define MSM_PMEM_MAX			8
 
 #endif
 
 #define FRAME_PREVIEW_OUTPUT1		0
 #define FRAME_PREVIEW_OUTPUT2		1
 #define FRAME_SNAPSHOT			2
-#define FRAME_THUMBNAIL		3
+#define FRAME_THUMBAIL			3
 #define FRAME_RAW_SNAPSHOT		4
 #define FRAME_MAX			5
 
@@ -354,9 +314,7 @@ struct outputCfg {
 #define CAMIF_TO_AXI_VIA_OUTPUT_2		3
 #define OUTPUT_1_AND_CAMIF_TO_AXI_VIA_OUTPUT_2	4
 #define OUTPUT_2_AND_CAMIF_TO_AXI_VIA_OUTPUT_1	5
-#define OUTPUT_1_AND_3 6
-#define LAST_AXI_OUTPUT_MODE_ENUM = OUTPUT_1_AND_3            7   /* video */
-
+#define LAST_AXI_OUTPUT_MODE_ENUM = OUTPUT_2_AND_CAMIF_TO_AXI_VIA_OUTPUT_1 6
 
 #define MSM_FRAME_PREV_1	0
 #define MSM_FRAME_PREV_2	1
@@ -373,9 +331,9 @@ struct outputCfg {
 #define OUTPUT_2_AND_CAMIF_TO_AXI_VIA_OUTPUT_1 6
 #define LAST_AXI_OUTPUT_MODE_ENUM = OUTPUT_2_AND_CAMIF_TO_AXI_VIA_OUTPUT_1 7
 
-#define MSM_FRAME_PREV_1        0
-#define MSM_FRAME_PREV_2        1
-#define MSM_FRAME_ENC           2
+#define MSM_FRAME_PREV_1	0
+#define MSM_FRAME_PREV_2	1
+#define MSM_FRAME_ENC		2
 
 #define OUTPUT_TYPE_P  1
 #define OUTPUT_TYPE_T  2
@@ -397,13 +355,7 @@ struct msm_frame {
 
 #define STAT_AEAW	0
 #define STAT_AF		1
-#define STAT_AEC	2
-#define STAT_AWB	3
-#define STAT_RS		4
-#define STAT_CS		5
-#define STAT_IHIST	6
-#define STAT_SKIN	7
-#define STAT_MAX	8
+#define STAT_MAX	2
 
 struct msm_stats_buf {
 	int type;
@@ -419,9 +371,9 @@ struct msm_stats_buf {
 #define MSM_V4L2_GET_CTRL	5
 #define MSM_V4L2_SET_CTRL	6
 #define MSM_V4L2_QUERY		7
-#define MSM_V4L2_GET_CROP 	8
-#define MSM_V4L2_SET_CROP 	9
-#define MSM_V4L2_MAX 		10
+#define MSM_V4L2_GET_CROP 8
+#define MSM_V4L2_SET_CROP 9
+#define MSM_V4L2_MAX 10
 
 #define V4L2_CAMERA_EXIT 43
 struct crop_info {
@@ -468,12 +420,19 @@ struct msm_snapshot_pp_status {
 #define CFG_GET_PICT_P_PL		25
 #define CFG_GET_AF_MAX_STEPS		26
 #define CFG_GET_PICT_MAX_EXP_LC		27
-#define CFG_I2C_IOCTL_R_OTP     28
-#define CFG_SET_OV_LSC  29      /*vincent for LSC calibration*/
+#define CFG_I2C_IOCTL_R_OTP	28
+#define CFG_SET_OV_LSC	29 	/*vincent for LSC calibration*/
 #define CFG_SET_SHARPNESS 30
 #define CFG_SET_SATURATION 31
 #define CFG_SET_OV_LSC_RAW_CAPTURE 32/*20100330 vincent for LSC calibration*/
-#define CFG_MAX 33
+#define CFG_SET_ISO			33
+#define CFG_SET_COORDINATE		34
+#define CFG_RUN_AUTO_FOCUS		35
+#define CFG_CANCEL_AUTO_FOCUS		36
+#define CFG_GET_EXP_FOR_LED		37
+#define CFG_UPDATE_AEC_FOR_LED		38
+#define CFG_SET_FRONT_CAMERA_MODE	39
+#define CFG_MAX        			40
 
 #define MOVE_NEAR	0
 #define MOVE_FAR	1
@@ -509,16 +468,16 @@ struct sensor_pict_fps {
 struct exp_gain_cfg {
 	uint16_t gain;
 	uint32_t line;
-        uint16_t mul;
+	uint16_t mul;
 };
 
 struct focus_cfg {
 	int32_t steps;
 	int dir;
-        int coarse_delay;
-        int fine_delay;
-        int step_dir;
-        int init_code_offset_max;
+	int coarse_delay;
+	int fine_delay;
+	int step_dir;
+	int init_code_offset_max;
 };
 
 struct fps_cfg {
@@ -529,69 +488,75 @@ struct fps_cfg {
 
 /*Becker for AWB calibration*/
 struct fuse_id{
-        uint32_t fuse_id_word1;
-        uint32_t fuse_id_word2;
-        uint32_t fuse_id_word3;
-        uint32_t fuse_id_word4;
+	uint32_t fuse_id_word1;
+	uint32_t fuse_id_word2;
+	uint32_t fuse_id_word3;
+	uint32_t fuse_id_word4;
 };
 
 /*Vincent for LSC calibration*/
 struct reg_addr_val_pair_struct {
-        uint16_t reg_addr;
-        uint8_t reg_val;
+	uint16_t reg_addr;
+	uint8_t reg_val;
 };
 
 struct lsc_cfg{
-        struct reg_addr_val_pair_struct lsc_table[144]; /*OV LSC table*/
+	struct reg_addr_val_pair_struct lsc_table[144]; /*OV LSC table*/
 };
 
 enum antibanding_mode{
-        CAMERA_ANTI_BANDING_50HZ,
-        CAMERA_ANTI_BANDING_60HZ,
-        CAMERA_ANTI_BANDING_AUTO,
+	CAMERA_ANTI_BANDING_50HZ,
+	CAMERA_ANTI_BANDING_60HZ,
+	CAMERA_ANTI_BANDING_AUTO,
 };
 
 enum brightness_t{
-        CAMERA_BRIGHTNESS_N3,
-        CAMERA_BRIGHTNESS_N2,
-        CAMERA_BRIGHTNESS_N1,
-        CAMERA_BRIGHTNESS_D,
-        CAMERA_BRIGHTNESS_P1,
-        CAMERA_BRIGHTNESS_P2,
-        CAMERA_BRIGHTNESS_P3,
+	CAMERA_BRIGHTNESS_N3,
+	CAMERA_BRIGHTNESS_N2,
+	CAMERA_BRIGHTNESS_N1,
+	CAMERA_BRIGHTNESS_D,
+	CAMERA_BRIGHTNESS_P1,
+	CAMERA_BRIGHTNESS_P2,
+	CAMERA_BRIGHTNESS_P3,
+        CAMERA_BRIGHTNESS_P4,
+        CAMERA_BRIGHTNESS_N4,
 };
 
+enum frontcam_t{
+	CAMERA_MIRROR,
+	CAMERA_REVERSE,
+};
 
 enum wb_mode{
-        CAMERA_AWB_AUTO,/*auto*/
-        CAMERA_AWB_CLOUDY,/*Cloudy*/
-        CAMERA_AWB_INDOOR_HOME,/*Fluorescent*/
-        CAMERA_AWB_INDOOR_OFFICE,/*Incandescent*/
-        CAMERA_AWB_SUNNY,/*daylight*/
+	CAMERA_AWB_AUTO,/*auto*/
+	CAMERA_AWB_CLOUDY,/*Cloudy*/
+	CAMERA_AWB_INDOOR_HOME,/*Fluorescent*/
+	CAMERA_AWB_INDOOR_OFFICE,/*Incandescent*/
+	CAMERA_AWB_SUNNY,/*daylight*/
 };
 
 enum sharpness_mode{
-        CAMERA_SHARPNESS_X0,
-        CAMERA_SHARPNESS_X1,
-        CAMERA_SHARPNESS_X2,
-        CAMERA_SHARPNESS_X3,
-        CAMERA_SHARPNESS_X4,
+	CAMERA_SHARPNESS_X0,
+	CAMERA_SHARPNESS_X1,
+	CAMERA_SHARPNESS_X2,
+	CAMERA_SHARPNESS_X3,
+	CAMERA_SHARPNESS_X4,
 };
 
 enum saturation_mode{
-        CAMERA_SATURATION_X0,
-        CAMERA_SATURATION_X05,
-        CAMERA_SATURATION_X1,
-        CAMERA_SATURATION_X15,
-        CAMERA_SATURATION_X2,
+	CAMERA_SATURATION_X0,
+	CAMERA_SATURATION_X05,
+	CAMERA_SATURATION_X1,
+	CAMERA_SATURATION_X15,
+	CAMERA_SATURATION_X2,
 };
 
 enum contrast_mode{
-        CAMERA_CONTRAST_P2,
-        CAMERA_CONTRAST_P1,
-        CAMERA_CONTRAST_D,
-        CAMERA_CONTRAST_N1,
-        CAMERA_CONTRAST_N2,
+	CAMERA_CONTRAST_P2,
+	CAMERA_CONTRAST_P1,
+	CAMERA_CONTRAST_D,
+	CAMERA_CONTRAST_N1,
+	CAMERA_CONTRAST_N2,
 };
 
 struct sensor_cfg_data {
@@ -613,14 +578,15 @@ struct sensor_cfg_data {
 		struct exp_gain_cfg exp_gain;
 		struct focus_cfg focus;
 		struct fps_cfg fps;
-                struct fuse_id fuse;
-                struct lsc_cfg lsctable;/*Vincent for LSC calibration*/
-                enum antibanding_mode antibanding_value;
-                enum brightness_t brightness_value;
-                enum wb_mode wb_value;
-                enum sharpness_mode sharpness_value;
-                enum saturation_mode saturation_value;
-                enum contrast_mode  contrast_value;
+		struct fuse_id fuse;
+		struct lsc_cfg lsctable;/*Vincent for LSC calibration*/
+		enum antibanding_mode antibanding_value;
+		enum brightness_t brightness_value;
+		enum frontcam_t frontcam_value;
+		enum wb_mode wb_value;
+		enum sharpness_mode sharpness_value;
+		enum saturation_mode saturation_value;
+		enum contrast_mode  contrast_value;
 	} cfg;
 };
 
