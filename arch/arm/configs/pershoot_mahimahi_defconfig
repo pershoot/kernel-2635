@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.8
-# Mon Nov  8 22:05:30 2010
+# Tue Nov  9 09:15:03 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -271,6 +271,7 @@ CONFIG_MSM_REMOTE_SPINLOCK=y
 #
 # Qualcomm MSM Board Type
 #
+# CONFIG_HOLES_IN_ZONE is not set
 # CONFIG_MACH_SWORDFISH is not set
 # CONFIG_MACH_QSD8X50_SURF is not set
 # CONFIG_MACH_QSD8X50A_ST1_5 is not set

@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.8
-# Mon Nov  8 22:09:20 2010
+# Tue Nov  9 09:15:35 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -276,6 +276,7 @@ CONFIG_MSM_AMSS_VERSION_6225=y
 #
 # Qualcomm MSM Board Type
 #
+# CONFIG_HOLES_IN_ZONE is not set
 # CONFIG_MACH_HALIBUT is not set
 CONFIG_MACH_TROUT=y
 CONFIG_MSM_DEBUG_UART_NONE=y
