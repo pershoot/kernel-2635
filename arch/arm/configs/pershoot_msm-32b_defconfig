@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.8
-# Tue Nov  9 09:15:19 2010
+# Tue Nov  9 09:57:57 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -279,6 +279,7 @@ CONFIG_MSM_AMSS_VERSION_6225=y
 # CONFIG_HOLES_IN_ZONE is not set
 # CONFIG_MACH_HALIBUT is not set
 CONFIG_MACH_TROUT=y
+# CONFIG_MSM_AMSS_SUPPORT_256MB_EBI1 is not set
 CONFIG_MSM_DEBUG_UART_NONE=y
 # CONFIG_MSM_DEBUG_UART1 is not set
 # CONFIG_MSM_DEBUG_UART2 is not set
