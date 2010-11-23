@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.35.8
-# Tue Nov  9 09:57:16 2010
+# Linux kernel version: 2.6.35.9
+# Tue Nov 23 04:10:10 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -276,6 +276,7 @@ CONFIG_MSM_REMOTE_SPINLOCK=y
 # CONFIG_MACH_QSD8X50_SURF is not set
 # CONFIG_MACH_QSD8X50A_ST1_5 is not set
 # CONFIG_MSM_AMSS_SUPPORT_256MB_EBI1 is not set
+# CONFIG_MSM_AMSS_RADIO2708_MEMMAP is not set
 CONFIG_MSM_DEBUG_UART=1
 # CONFIG_MSM_DEBUG_UART_NONE is not set
 CONFIG_MSM_DEBUG_UART1=y
