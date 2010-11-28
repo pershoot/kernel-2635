@@ -336,8 +336,18 @@ MODFLAGS	= -DMODULE
 CFLAGS_MODULE   = $(MODFLAGS)
 AFLAGS_MODULE   = $(MODFLAGS)
 LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
+
+#if defined (CONFIG_ARCH_MSM_SCORPION)
 CFLAGS_KERNEL   = -O1 -mtune=cortex-a8 -ftree-vectorize -ffast-math -fsingle-precision-constant
 AFLAGS_KERNEL   = -O1 -mtune=cortex-a8 -ftree-vectorize -ffast-math -fsingle-precision-constant
+#elif defined (CONFIG_ARCH_MSM7X00A)
+CFLAGS_KERNEL   = -O1 -ftree-vectorize -ffast-math -fsingle-precision-constant
+AFLAGS_KERNEL   = -O1 -ftree-vectorize -ffast-math -fsingle-precision-constant
+#else
+CFLAGS_KERNEL   =
+AFLAGS_KERNEL   =
+#endif
+
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
