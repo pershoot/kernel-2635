@@ -28,7 +28,7 @@ static DEFINE_PER_CPU(struct task_struct *, softlockup_watchdog);
 static DEFINE_PER_CPU(bool, softlock_touch_sync);
 
 static int __read_mostly did_panic;
-int __read_mostly softlockup_thresh = 90;
+int __read_mostly softlockup_thresh = 60;
 
 /*
  * Should we panic (and reboot, if panic_timeout= is set) when a
