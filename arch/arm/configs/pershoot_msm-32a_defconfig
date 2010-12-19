@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Linux kernel version: 2.6.35.9
-# Tue Nov 30 00:43:07 2010
+# Linux kernel version: 2.6.35.10
+# Sun Dec 19 09:17:37 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -285,6 +285,7 @@ CONFIG_MSM_DEBUG_UART_NONE=y
 CONFIG_MSM_SMD_PKG3=y
 CONFIG_MACH_SAPPHIRE=y
 CONFIG_HTC_HEADSET=y
+CONFIG_HTC_AUDIO_JACK=y
 # CONFIG_HTC_35MM_JACK is not set
 CONFIG_TROUT_BATTCHG=y
 CONFIG_HTC_PWRSINK=y
