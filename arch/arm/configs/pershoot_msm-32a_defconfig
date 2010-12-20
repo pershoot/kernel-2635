@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.10
-# Sun Dec 19 09:17:37 2010
+# Mon Dec 20 17:25:57 2010
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -1386,6 +1386,7 @@ CONFIG_USB_GADGET_SELECTED=y
 # CONFIG_USB_GADGET_LANGWELL is not set
 CONFIG_USB_GADGET_MSM_72K=y
 CONFIG_USB_MSM_72K=y
+# CONFIG_USB_MSM_72K_HTC is not set
 # CONFIG_USB_GADGET_DUMMY_HCD is not set
 CONFIG_USB_GADGET_DUALSPEED=y
 # CONFIG_USB_ZERO is not set
