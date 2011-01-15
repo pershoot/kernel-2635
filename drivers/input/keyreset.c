@@ -91,18 +91,14 @@ static void keyreset_event(struct input_handle *handle, unsigned int type,
 		if (restart_requested)
 			panic("keyboard reset failed, %d", restart_requested);
 		pr_info("keyboard reset\n");
-		if (state->reset_fn) {
-			restart_requested = state->reset_fn();
-		} else {
-			schedule_delayed_work(&restart_work, KEYRESET_DELAY);
-			restart_requested = 1;
-	        } else if (restart_requested == 1) { 
+		schedule_delayed_work(&restart_work, KEYRESET_DELAY);
+		restart_requested = 1;
+        } else if (restart_requested == 1) { 
 		if (cancel_delayed_work(&restart_work)) { 
 			pr_info("%s: cancel restart work\n", __func__); 
 			restart_requested = 0; 
 		} else 
 			pr_info("%s: cancel failed\n", __func__); 
-		}
 	}
 done:
 	spin_unlock_irqrestore(&state->lock, flags);
