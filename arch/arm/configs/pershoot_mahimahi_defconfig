@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.10
-# Tue Dec 21 20:52:27 2010
+# Sat Jan 15 01:00:33 2011
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -40,9 +40,9 @@ CONFIG_LOCALVERSION="-cyanogenmod"
 CONFIG_HAVE_KERNEL_GZIP=y
 CONFIG_HAVE_KERNEL_LZMA=y
 CONFIG_HAVE_KERNEL_LZO=y
-CONFIG_KERNEL_GZIP=y
+# CONFIG_KERNEL_GZIP is not set
 # CONFIG_KERNEL_BZIP2 is not set
-# CONFIG_KERNEL_LZMA is not set
+CONFIG_KERNEL_LZMA=y
 # CONFIG_KERNEL_LZO is not set
 # CONFIG_SWAP is not set
 # CONFIG_SYSVIPC is not set
@@ -1341,8 +1341,11 @@ CONFIG_720P_CAMERA=y
 # CONFIG_MT9D112 is not set
 # CONFIG_MT9P012 is not set
 CONFIG_S5K3E2FX=y
+# CONFIG_S5K4E1GX is not set
+# CONFIG_S5K6AAFX is not set
 # CONFIG_OV8810 is not set
 # CONFIG_OV9665 is not set
+# CONFIG_S5K3H1GX is not set
 # CONFIG_DAB is not set
 
 #
