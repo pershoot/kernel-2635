@@ -483,7 +483,7 @@ int acpuclk_set_rate(unsigned long rate, enum setrate_reason reason)
 
 	/* Change the AXI bus frequency if we can. */
 	if (strt_s->axiclk_khz != tgt_s->axiclk_khz) {
-		rc = clk_set_rate(ebi1_clk, tgt_s->axiclk_khz);
+		rc = clk_set_rate(ebi1_clk, tgt_s->axiclk_khz * 1000);
 		if (rc < 0)
 			pr_err("Setting AXI min rate failed!\n");
 	}
